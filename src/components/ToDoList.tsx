@@ -21,7 +21,7 @@ function ToDoList() {
   const toDos = useRecoilValue(toDoSelector);
   const [category, setCategory] = useRecoilState(categoryState);
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
-    setCategory(event.currentTarget.value as any);
+    setCategory(event.currentTarget.value as any );
   };
 
   return (
@@ -29,9 +29,9 @@ function ToDoList() {
     <Div>
       <H1>To Dos</H1>
       <hr />
-      <span>makeOptions : </span>
-      <select value={category} onInput={onInput}>
-        {Object.values(makeOptions).map((makeOptions) => (
+      <span>categories : </span>
+      <select onInput={onInput}>
+        {Object.values(categoryState).map((makeOptions) => (
           <option value={makeOptions}>{makeOptions}</option>
         ))}
         {/* <option value={Categories.TO_DO}>To Do</option>
