@@ -1,5 +1,9 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import ToDoList from "./components/ToDoList";
+import Category_Options from "./Category_Options";
+import { IOption, makeOptions } from "./atoms";
+import { useRecoilValue } from "recoil";
+import Optionvalue from "./Optionvalue";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -64,13 +68,36 @@ a {
   text-decoration:none;
   color:inherit;
 }
+
 `;
 
+const Flex = styled.div`
+  display: flex;
+`;
+const MakeOption = styled.div`
+width: 25%;
+height: auto;
+margin: 3%;
+`
 function App() {
+  const option = useRecoilValue(makeOptions);
   return (
     <>
       <GlobalStyle />
-      <ToDoList />
+      <Flex>
+        <MakeOption>
+        <Category_Options />
+        <hr/>
+        {option?.map((aOption) => (
+          <Optionvalue key={aOption.id} {...aOption} />
+        ))}
+        {/* {optionvalue?.map((option:IOption) => (
+          {...option}
+        ))} */}
+
+        </MakeOption>
+        <ToDoList />
+      </Flex>
     </>
   );
 }

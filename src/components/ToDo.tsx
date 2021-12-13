@@ -1,9 +1,9 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
-import { Categories, IToDo, toDoState } from "../atoms";
+import { IOption, makeOptions } from "../atoms";
 
-function ToDo({ text, id, category }: IToDo) {
-  const setToDos = useSetRecoilState(toDoState);
+function ToDo({ text, id, category }: IOption) {
+  const setToDos = useSetRecoilState(makeOptions);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name },
@@ -11,8 +11,8 @@ function ToDo({ text, id, category }: IToDo) {
     setToDos((oldToDos) => {
       // 수정하고 싶은 인덱스의 넘버를 가져온다.
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
-      const oldToDo = oldToDos[targetIndex];
-      const newToDo = { text, id, category: name as any};
+      // const oldToDo = oldToDos[targetIndex];
+      const newToDo = { text, id, category: name as any };
       return [
         ...oldToDos.slice(0, targetIndex),
         newToDo,
@@ -20,24 +20,30 @@ function ToDo({ text, id, category }: IToDo) {
       ];
     });
   };
+
   return (
     <li>
-      <span>{text}</span>
-      {category !== Categories.DOING && (
-        <button name={Categories.DOING} onClick={onClick}>
-          DOING
+      <span style={{marginRight:"10px"}}>{text}</span>
+      {Object.values(makeOptions).map((makeOptions) => category !== makeOptions && (
+        <button name={makeOptions} onClick={onClick}>
+          {makeOptions}
         </button>
-      )}
-      {category !== Categories.TO_DO && (
-        <button name={Categories.TO_DO} onClick={onClick}>
-          To Do
-        </button>
-      )}
-      {category !== Categories.DONE && (
-        <button name={Categories.DONE} onClick={onClick}>
-          DONE
-        </button>
-      )}
+      ))}
+       {/* {category !== Categories.DOING && (
+         <button name={Categories.DOING} onClick={onClick}>
+           {Categories.DOING}
+         </button>
+       )}
+       {category !== Categories.TO_DO && (
+         <button name={Categories.TO_DO} onClick={onClick}>
+           {Categories.TO_DO}
+         </button>
+       )}
+       {category !== Categories.DONE && (
+         <button name={Categories.DONE} onClick={onClick}>
+           {Categories.DONE}
+         </button>
+       )} */}
     </li>
   );
 }

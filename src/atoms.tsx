@@ -1,30 +1,42 @@
 import { atom, selector } from "recoil";
-export enum Categories {
-  "TO_DO"="TO_DO",
-  "DOING"="DOING",
-  "DONE"="DONE",
-}
-export interface IToDo {
-  text: string;
-  category: Categories;
-  id: number;
-}
 
-export const categoryState = atom<Categories>({
+// export interface Categories {
+//   text: string;
+// }
+
+export const categoryState = atom({
   key: "category",
-  default: Categories.TO_DO,
-});
-
-export const toDoState = atom<IToDo[]>({
-  key: "toDo",
   default: [],
 });
+
+// export interface IToDo {
+//   text: string;
+//   category: {};
+//   id: number;
+// }
+
+
+
+// export const toDoState = atom<IOption[]>({
+//   key: "toDo",
+//   default: [],
+// });
 
 export const toDoSelector = selector({
   key: "toDoSelector",
   get: ({ get }) => {
-    const toDos = get(toDoState);
+    const toDos = get(makeOptions);
     const category = get(categoryState);
-    return toDos.filter((toDo) => toDo.category === category);
+    return toDos.filter((toDo) => toDo.category === category );
   },
 });
+export interface IOption {
+  text: string;
+  category:{},
+  id:number;
+}
+export const makeOptions = atom<IOption[]>({
+  key: "option",
+  default: [],
+})
+
