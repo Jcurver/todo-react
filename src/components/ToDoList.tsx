@@ -1,52 +1,51 @@
-import React,{ Component } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import styled from "styled-components";
-import { makeOptions, categoryState, toDoSelector } from "../atoms";
-import CreateToDo from "./CreateToDo";
-import ToDo from "./ToDo";
-import Select from "react-select/dist/declarations/src/Select";
-
-
+import React, { Component } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
+import { categoryState, selectedCategoryIdState, toDoSelector } from '../atoms';
+import CreateToDo from './CreateToDo';
+import ToDo from './ToDo';
 
 const Div = styled.div`
   height: auto;
   width: 60%;
-  margin: 3% 3% ;
+  margin: 3% 3%;
   word-break: break-all;
-`
+`;
 
 const H1 = styled.h1`
-font-size: 30px;
-`
+  font-size: 30px;
+`;
 function ToDoList() {
   const toDos = useRecoilValue(toDoSelector);
-  const [category, setCategory] = useRecoilState(categoryState);
-  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
-    setCategory(event.currentTarget.value as any );
+  const categories = useRecoilValue(categoryState);
+  const [selectedCategoryId, selectCategory] = useRecoilState(
+    selectedCategoryIdState
+  );
+  const onChange = (event: React.FormEvent<HTMLSelectElement>) => {
+    selectCategory(+event.currentTarget.value);
   };
 
   return (
-
     <Div>
       <H1>To Dos</H1>
       <hr />
       <span>categories : </span>
-      <select onInput={onInput}>
-        {Object.values(makeOptions).map((makeOptions) => (
-          <option value={makeOptions}>{makeOptions}</option>
+      <select onChange={onChange} value={selectedCategoryId}>
+        <option>Select Option</option>
+        {categories.map((category) => (
+          <option value={category.id}>{category.text}</option>
         ))}
         {/* <option value={Categories.TO_DO}>To Do</option>
         <option value={Categories.DOING}>Doing</option>
         <option value={Categories.DONE}>Done</option> */}
       </select>
-      <hr/>
+      <hr />
       <CreateToDo />
-      <hr/>
+      <hr />
       {toDos?.map((aToDo) => (
         <ToDo key={aToDo.id} {...aToDo} />
       ))}
     </Div>
-
   );
 }
 
