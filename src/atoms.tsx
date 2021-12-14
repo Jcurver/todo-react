@@ -5,7 +5,7 @@ export interface Categories {
   category:{},
   id:number;
 }
-
+// toDos 배열
 export const categoryState = atom<Categories[]>({
   key: "category",
   default: [],
@@ -27,7 +27,7 @@ export const toDoState = atom<IToDo[]>({
 export const toDoSelector = selector({
   key: "toDoSelector",
   get: ({ get }) => {
-    const toDos = get(makeOptions);
+    const toDos = get(categoryState);
     const category = get(makeOptions);
     return toDos.filter((toDo) => toDo.category === category );
   },

@@ -1,9 +1,10 @@
-import React from "react";
+import React,{ Component } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { makeOptions, categoryState, toDoSelector } from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
+import Select from "react-select/dist/declarations/src/Select";
 
 
 
@@ -31,7 +32,7 @@ function ToDoList() {
       <hr />
       <span>categories : </span>
       <select onInput={onInput}>
-        {Object.values(categoryState).map((makeOptions) => (
+        {Object.values(makeOptions).map((makeOptions) => (
           <option value={makeOptions}>{makeOptions}</option>
         ))}
         {/* <option value={Categories.TO_DO}>To Do</option>

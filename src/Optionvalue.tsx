@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 import { IOption } from "./atoms";
 
 
-function Optionvalue({ text, id}: IOption) {
+function Optionvalue({ text, id, category}: IOption) {
   // const setToDos = useSetRecoilState(toDoState);
   // const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
   //   const {

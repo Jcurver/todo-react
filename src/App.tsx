@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import ToDoList from "./components/ToDoList";
-import Category_Options from "./Category_Options";
+import CategoryOptions from "./Category_Options";
 import { IOption, makeOptions } from "./atoms";
 import { useRecoilValue } from "recoil";
 import Optionvalue from "./Optionvalue";
@@ -86,7 +86,7 @@ function App() {
       <GlobalStyle />
       <Flex>
         <MakeOption>
-        <Category_Options />
+        <CategoryOptions />
         <hr/>
         {option?.map((aOption) => (
           <Optionvalue key={aOption.id} {...aOption} />
