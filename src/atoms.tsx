@@ -1,44 +1,36 @@
-import { atom, selector } from "recoil";
+import { atom, selector } from 'recoil';
 
-export interface Categories {
+export interface Category {
   text: string;
-  category:{},
-  id:number;
+  id: number;
 }
 // toDos 배열
-export const categoryState = atom<Categories[]>({
-  key: "category",
+export const categoryState = atom<Category[]>({
+  key: 'category',
   default: [],
+});
+
+export const selectedCategoryIdState = atom<number | undefined>({
+  key: 'selectedCategoryId',
+  default: undefined,
 });
 
 export interface IToDo {
   text: string;
-  category: {};
+  categoryId: number;
   id: number;
 }
 
-
-
 export const toDoState = atom<IToDo[]>({
-  key: "toDo",
+  key: 'toDo',
   default: [],
 });
 
 export const toDoSelector = selector({
-  key: "toDoSelector",
+  key: 'toDoSelector',
   get: ({ get }) => {
-    const toDos = get(categoryState);
-    const category = get(makeOptions);
-    return toDos.filter((toDo) => toDo.category === category );
+    const todos = get(toDoState);
+    const categoryId = get(selectedCategoryIdState);
+    return todos.filter((todo) => todo.categoryId === categoryId);
   },
 });
-export interface IOption {
-  text: string;
-  category:{},
-  id:number;
-}
-export const makeOptions = atom<IOption[]>({
-  key: "option",
-  default: [],
-})
-
